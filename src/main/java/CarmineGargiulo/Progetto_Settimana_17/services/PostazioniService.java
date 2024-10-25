@@ -2,6 +2,7 @@ package CarmineGargiulo.Progetto_Settimana_17.services;
 
 import CarmineGargiulo.Progetto_Settimana_17.entities.Postazione;
 import CarmineGargiulo.Progetto_Settimana_17.enums.TipoPostazione;
+import CarmineGargiulo.Progetto_Settimana_17.exceptions.EmptyListException;
 import CarmineGargiulo.Progetto_Settimana_17.repositories.PostazioniRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class PostazioniService {
     }
 
     public List<Postazione> trovaPerTipoECitta(TipoPostazione tipoPostazione, String citta){
-        return postazioniRepository.filtraPerTipoECitta(tipoPostazione, citta);
+        List<Postazione> postazioniList = postazioniRepository.filtraPerTipoECitta(tipoPostazione, citta);
+        if(postazioniList.isEmpty()) throw new EmptyListException();
+        return postazioniList;
     }
+
+
 }

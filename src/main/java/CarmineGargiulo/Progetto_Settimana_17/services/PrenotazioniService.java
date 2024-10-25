@@ -1,6 +1,8 @@
 package CarmineGargiulo.Progetto_Settimana_17.services;
 
 import CarmineGargiulo.Progetto_Settimana_17.entities.Prenotazione;
+import CarmineGargiulo.Progetto_Settimana_17.entities.Utente;
+import CarmineGargiulo.Progetto_Settimana_17.exceptions.EmptyListException;
 import CarmineGargiulo.Progetto_Settimana_17.exceptions.ValidationException;
 import CarmineGargiulo.Progetto_Settimana_17.repositories.PrenotazioniRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,12 @@ public class PrenotazioniService {
 
     public List<Prenotazione> trovaTutte(){
         return prenotazioniRepository.findAll();
+    }
+
+    public List<Prenotazione> cercaPerUtente(Utente utente){
+        List<Prenotazione> prenotazioniList = prenotazioniRepository.findByUtente(utente);
+        if(prenotazioniList.isEmpty()) throw new EmptyListException();
+        return prenotazioniList;
     }
 
 }

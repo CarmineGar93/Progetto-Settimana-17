@@ -1,6 +1,7 @@
 package CarmineGargiulo.Progetto_Settimana_17.services;
 
 import CarmineGargiulo.Progetto_Settimana_17.entities.Utente;
+import CarmineGargiulo.Progetto_Settimana_17.exceptions.NotFoundException;
 import CarmineGargiulo.Progetto_Settimana_17.exceptions.ValidationException;
 import CarmineGargiulo.Progetto_Settimana_17.repositories.UtentiRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -34,5 +35,11 @@ public class UtentiService {
 
     public List<Utente> trovaTutti(){
         return utentiRepository.findAll();
+    }
+
+    public Utente trovaUtentePerUsername(String username){
+        Utente utente = utentiRepository.findFirstByUsername(username);
+        if(utente == null) throw new NotFoundException("Utente");
+        return utente;
     }
 }
