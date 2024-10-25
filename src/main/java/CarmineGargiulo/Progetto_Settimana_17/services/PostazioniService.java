@@ -1,6 +1,7 @@
 package CarmineGargiulo.Progetto_Settimana_17.services;
 
 import CarmineGargiulo.Progetto_Settimana_17.entities.Postazione;
+import CarmineGargiulo.Progetto_Settimana_17.enums.TipoPostazione;
 import CarmineGargiulo.Progetto_Settimana_17.repositories.PostazioniRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,9 @@ public class PostazioniService {
 
     public List<Postazione> trovaTutti(){
         return postazioniRepository.findAll();
+    }
+
+    public List<Postazione> trovaPerTipoECitta(TipoPostazione tipoPostazione, String citta){
+        return postazioniRepository.filtraPerTipoECitta(tipoPostazione, citta);
     }
 }
