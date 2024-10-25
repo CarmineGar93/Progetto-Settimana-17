@@ -28,7 +28,7 @@ public class PrenotazioniService {
         if(prenotazione.getDataPrenotazione().isBefore(LocalDate.now()))
             throw new ValidationException("Impossibile salvare la prenotazione - La data deve essere superiore alla data di oggi");
         prenotazioniRepository.save(prenotazione);
-        log.info("Prenotazione " + prenotazione + "effettuata con successo ");
+        System.out.println("Prenotazione " + prenotazione + " effettuata con successo ");
     }
 
     public void salvaMoltePrenotazioni(List<Prenotazione> prenotazioni){
@@ -49,6 +49,13 @@ public class PrenotazioniService {
         List<Prenotazione> prenotazioniList = prenotazioniRepository.findByUtente(utente);
         if(prenotazioniList.isEmpty()) throw new EmptyListException();
         return prenotazioniList;
+    }
+
+    public void cancellaPrenotazione(Prenotazione prenotazione){
+        if(prenotazione.getDataPrenotazione().isBefore(LocalDate.now()))
+            throw new ValidationException("Impossibile cancellare una prenotazione già avvenuta");
+        prenotazioniRepository.delete(prenotazione);
+        System.out.println("Prenotazione " +  prenotazione + " cancellata con successo");
     }
 
 }

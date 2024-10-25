@@ -82,11 +82,12 @@ public class MenuInterattivoRunner implements CommandLineRunner {
                 System.out.println("Che cosa vuoi fare? ");
                 System.out.println("1 - Prenota postazione");
                 System.out.println("2 - Controlla prenotazioni effettuate");
+                System.out.println("3 - Cancella una prenotazione effettuata");
                 System.out.println("0 - Esci");
                 int scelta2;
                 while (true) {
                     scelta2 = verifyInput();
-                    if (scelta2 < 0 || scelta2 > 2) System.out.println("Devi inserire un numero tra 0 e 2");
+                    if (scelta2 < 0 || scelta2 > 3) System.out.println("Devi inserire un numero tra 0 e 3");
                     else break;
                 }
                 switch (scelta2){
@@ -100,12 +101,44 @@ public class MenuInterattivoRunner implements CommandLineRunner {
                     }
                     case 2: {
                         mostraListaPrenotazioniEffettuate(utente);
+                        break;
+                    }
+                    case 3: {
+                        cancellaPrenotazioneEffettuata(utente);
+                        break;
                     }
                 }
             }
 
         }
 
+    }
+
+    private void cancellaPrenotazioneEffettuata(Utente utente){
+        try {
+            List<Prenotazione> prenotazioniEffettuate =  prenotazioniService.cercaPerUtente(utente);
+            System.out.println("Seleziona la prenotazione che vuoi cancellare");
+            prenotazioniEffettuate.forEach(prenotazione -> System.out.println((prenotazioniEffettuate.indexOf(prenotazione) + 1) + " - " + prenotazione));
+            int scelta;
+            while (true) {
+                scelta = verifyInput();
+                if (scelta <= 0 || scelta > prenotazioniEffettuate.size()) System.out.println("Devi inserire un numero tra 1 e " + prenotazioniEffettuate.size());
+                else break;
+            }
+            System.out.println("Sei sicuro ?");
+            System.out.println("1 - SI");
+            System.out.println("2 - NO");
+            int scelta2;
+            while (true) {
+                scelta2 = verifyInput();
+                if (scelta2 <= 0 || scelta2 > 2) System.out.println("Devi inserire 1 o 2");
+                else break;
+            }
+            if(scelta2 == 1) prenotazioniService.cancellaPrenotazione(prenotazioniEffettuate.get(scelta - 1));
+            else System.out.println("Torno al menu");
+        } catch (EmptyListException e){
+            System.out.println("Nessuna prenotazione effettuata");
+        }
     }
 
     private void prenotaPostazione(Utente utente){
@@ -128,7 +161,7 @@ public class MenuInterattivoRunner implements CommandLineRunner {
             int scelta2;
             while (true) {
                 scelta2 = verifyInput();
-                if (scelta2 <= 0 || scelta2 > postazioniList.size()) System.out.println("Devi inserire un numero tra 1 e " + tipiPostazione.size());
+                if (scelta2 <= 0 || scelta2 > postazioniList.size()) System.out.println("Devi inserire un numero tra 1 e " + postazioniList.size());
                 else break;
             }
             Postazione postazioneScelta = postazioniList.get(scelta2 - 1);
