@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,6 +25,8 @@ public class PrenotazioniService {
             throw new ValidationException("Impossibile salvare la prenotazione - Hai già una prenotazione per la data selezionata");
         if(prenotazione.getNrPartecipanti() > prenotazione.getPostazione().getNrMaxOccupanti())
             throw new ValidationException("Impossibile salvare la prenotazione - Numero di partecipanti maggiori della capienza della postazione scelta");
+        if(prenotazione.getDataPrenotazione().isBefore(LocalDate.now()))
+            throw new ValidationException("Impossibile salvare la prenotazione - La data deve essere superiore alla data di oggi");
         prenotazioniRepository.save(prenotazione);
         log.info("Prenotazione " + prenotazione + "effettuata con successo ");
     }

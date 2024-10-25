@@ -139,7 +139,7 @@ public class MenuInterattivoRunner implements CommandLineRunner {
                     date = LocalDate.parse(scanner.nextLine());
                     break;
                 } catch (RuntimeException e){
-                    System.out.println(e.getClass());
+                    System.out.println("Formattazione data non valido");
                     System.out.println("Riprova");
                 }
             }
