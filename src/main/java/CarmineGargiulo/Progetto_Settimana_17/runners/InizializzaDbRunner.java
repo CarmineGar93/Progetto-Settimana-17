@@ -104,29 +104,6 @@ public class InizializzaDbRunner implements CommandLineRunner {
                 log.error(e.getMessage());
             }
         }
-        //Prova per vedere se mi genera un eccezione se provo a prenotare una postazione che ha già una prenotazione
-        try {
-            Prenotazione prenotazioneFromDb = prenotazioniList.get(3);
-            Prenotazione prenotazione = new Prenotazione(prenotazioneFromDb.getDataPrenotazione(), prenotazioneFromDb.getPostazione(), utentiList.get(5));
-            prenotazioniService.salvaPrenotazione(prenotazione);
-        } catch (ValidationException e){
-            log.error(e.getMessage());
-        }
-        //Prova per vedere se mi genera un eccezione se provo a prenotare con un utente che ha già una prenotazione per quella data
-        try {
-            Prenotazione prenotazioneFromDb = prenotazioniList.get(5);
-            Prenotazione prenotazione = new Prenotazione(prenotazioneFromDb.getDataPrenotazione(), postazioniList.get(50), prenotazioneFromDb.getUtente());
-            prenotazioniService.salvaPrenotazione(prenotazione);
-        } catch (ValidationException e){
-            log.error(e.getMessage());
-        }
-        //Filtro lista postazioni per tipo e città
-        System.out.println("--------Lista openspace a Milano---------");
-        try {
-            postazioniService.trovaPerTipoECitta(TipoPostazione.OPENSPACE, "Milano").forEach(System.out::println);
-        } catch (EmptyListException e){
-            log.error(e.getMessage());
-        }
 
 
     }
