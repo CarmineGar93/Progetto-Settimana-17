@@ -39,8 +39,7 @@ public class InizializzaDbRunner implements CommandLineRunner {
     private Faker faker;
     @Override
     public void run(String... args) throws Exception {
-        List<Utente> utentiList = utentiService.trovaTutti();
-        if(utentiList.isEmpty()){
+        if(utentiService.trovaTutti().isEmpty()){
             List<Utente> utentiPerDb = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
                 String name = faker.name().firstName();
@@ -57,8 +56,8 @@ public class InizializzaDbRunner implements CommandLineRunner {
             }
 
         }
-        List<Edificio> edificiList = edificiService.trovaTutti();
-        if(edificiList.isEmpty()){
+
+        if(edificiService.trovaTutti().isEmpty()){
             List<Edificio> edificiPerDb = new ArrayList<>();
             for (int i = 0; i < 30; i++) {
                 String[] citta = new String[]{"Milano", "Roma", "Napoli", "Genova", "Torino", "Palermo", "Firenze"};
@@ -72,8 +71,8 @@ public class InizializzaDbRunner implements CommandLineRunner {
             }
 
         }
-        List<Postazione> postazioniList = postazioniService.trovaTutti();
-        if(postazioniList.isEmpty()){
+        if(postazioniService.trovaTutti().isEmpty()){
+            List<Edificio> edificiList = edificiService.trovaTutti();
             List<Postazione> postazioniPerDb = new ArrayList<>();
             edificiList.forEach(edificio -> {
                 for (int i = 0; i < faker.random().nextInt(1, 4); i++) {
@@ -87,8 +86,9 @@ public class InizializzaDbRunner implements CommandLineRunner {
             });
             postazioniService.salvaMoltePostazioni(postazioniPerDb);
         }
-        List<Prenotazione> prenotazioniList = prenotazioniService.trovaTutte();
-        if(prenotazioniList.isEmpty()){
+        if(prenotazioniService.trovaTutte().isEmpty()){
+            List<Postazione> postazioniList = postazioniService.trovaTutti();
+            List<Utente> utentiList = utentiService.trovaTutti();
             List<Prenotazione> prenotazioniPerDb = new ArrayList<>();
             utentiList.forEach(utente -> {
                 for (int i = 0; i < 2; i++) {
