@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -21,6 +22,7 @@ public class Postazione {
     private UUID postazione_id;
     private String descrizione;
     @Column(nullable = false, name = "tipo_postazione")
+    @Enumerated(EnumType.STRING)
     private TipoPostazione tipoPostazione;
     @Column(nullable = false, name = "nr_max_occupanti")
     private int nrMaxOccupanti;
@@ -28,6 +30,9 @@ public class Postazione {
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "edificio_id")
     private Edificio edificio;
+    @OneToMany(mappedBy = "postazione")
+    @Setter(AccessLevel.NONE)
+    private List<Prenotazione> prenotazioniList;
 
     public Postazione(String descrizione, TipoPostazione tipoPostazione, int nrMaxOccupanti, Edificio edificio) {
         this.descrizione = descrizione;

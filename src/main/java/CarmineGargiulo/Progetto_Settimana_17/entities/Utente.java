@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -24,6 +25,10 @@ public class Utente {
     private String nominativo;
     @Column(nullable = false)
     private String email;
+    @OneToMany(mappedBy = "utente")
+    @Setter(AccessLevel.NONE)
+    private List<Prenotazione> prenotazioniList;
+
 
     public Utente(String username, String nominativo, String email) {
         this.username = username;
