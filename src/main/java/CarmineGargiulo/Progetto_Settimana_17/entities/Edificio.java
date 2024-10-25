@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -25,6 +26,9 @@ public class Edificio {
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
     private String citta;
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "edificio")
+    private List<Postazione> postazioniList;
 
     public Edificio(String nome, String indirizzo, String citta) {
         this.nome = nome;
