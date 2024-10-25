@@ -16,8 +16,8 @@ public class UtentiService {
     private UtentiRepository utentiRepository;
 
     public void salvaUtente(Utente utente){
-        if(utentiRepository.existsByEmailOrNominativo(utente.getEmail(), utente.getNominativo())) throw new ValidationException("Username o email già in uso");
-        if(utente.getNominativo().length() < 2) throw new ValidationException("Username non valido");
+        if(utentiRepository.existsByEmailOrUsername(utente.getEmail(), utente.getUsername())) throw new ValidationException("Username o email già in uso");
+        if(utente.getNominativo().length() <= 2) throw new ValidationException("Username non valido");
         utentiRepository.save(utente);
         log.info("Utente " + utente + " salvato con successo");
     }

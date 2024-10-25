@@ -38,5 +38,6 @@ public class InizializzaDbRunner implements CommandLineRunner {
             }
 
         }
+
     }
 }
