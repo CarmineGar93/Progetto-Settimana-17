@@ -96,6 +96,7 @@ public class MenuInterattivoRunner implements CommandLineRunner {
                     }
                     case 1: {
                         prenotaPostazione(utente);
+                        break;
                     }
                     case 2: {
                         mostraListaPrenotazioniEffettuate(utente);
@@ -143,10 +144,37 @@ public class MenuInterattivoRunner implements CommandLineRunner {
                     System.out.println("Riprova");
                 }
             }
-            try {
-                prenotazioniService.salvaPrenotazione(new Prenotazione(date, postazioneScelta, utente));
-            } catch (ValidationException e){
-                System.out.println(e.getMessage());
+            System.out.println("Sai quante persone saranno invitate all'evento ?");
+            System.out.println("1 - SI");
+            System.out.println("2 - NO");
+            int scelta3;
+            while (true) {
+                scelta3 = verifyInput();
+                if (scelta3 <= 0 || scelta3 > 2) System.out.println("Devi inserire 1 o 2");
+                else break;
+            }
+            if (scelta3 == 1){
+                System.out.println("Inserisci il numero di partecipanti ");
+                int nrPartecipanti;
+                while (true) {
+                    nrPartecipanti = verifyInput();
+                    if (nrPartecipanti <= 0 ) System.out.println("Devi inserire un numero maggiore di zero");
+                    else break;
+                }
+                try {
+                    Prenotazione prenotazione = new Prenotazione(date, postazioneScelta, utente);
+                    prenotazione.setNrPartecipanti(nrPartecipanti);
+                    prenotazioniService.salvaPrenotazione(prenotazione);
+                } catch (ValidationException e){
+                    System.out.println(e.getMessage());
+                }
+
+            } else {
+                try {
+                    prenotazioniService.salvaPrenotazione(new Prenotazione(date, postazioneScelta, utente));
+                } catch (ValidationException e){
+                    System.out.println(e.getMessage());
+                }
             }
         } catch (EmptyListException e){
             System.out.println(e.getMessage());
